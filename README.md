@@ -15,14 +15,14 @@ Go to the MagicMirror/config directory and edit the config.js file. Add the modu
 
 You'll need your uprn (Unique Property Reference Number) for the Kirklees API. I had to intercept the request using BurpSuite to find this, there may be an easier way.
 
-You'll get a 12 digit number. Enter this in the config.js for your MagicMirror installation:
+Enter this in the config.js for your MagicMirror installation:
 
     {
         module: 'MMM-WestBerksBinDay',
         position: 'top_left',
         header: 'Bin Day',
         config: {
-            uprn: "123456789012",
+            uprn: "123456789",
             dateFormat: "dddd D MMMM"
         }
     },
