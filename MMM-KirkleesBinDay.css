@@ -1,0 +1,31 @@
+.MMM-KirkleesBinDay .binday-container {
+    line-height: 1.50;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    border-bottom: solid 1px #222;
+    position: relative;
+    text-align: left
+  }
+  
+  .MMM-KirkleesBinDay .binday-container .binday-date {
+    color: #FFF;
+  }
+  
+  .MMM-KirkleesBinDay .binday-container .binday-icon-container {
+    white-space: nowrap;
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    line-height: 24px;
+  }
+  
+  .MMM-KirkleesBinDay .binday-container .binday-icon-container .binday-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    vertical-align: bottom;
+    display: inline;
+    position: relative;
+    margin-left: 4px;
+  }
