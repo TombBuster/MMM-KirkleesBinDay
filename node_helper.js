@@ -19,7 +19,7 @@ module.exports = NodeHelper.create({
 
         axios.get("https://www.kirklees.gov.uk/webservices/Utils/bins.asmx/GetBinCollectionsForPropertyNew2", {
             params: {
-                uprn: payload.json,
+                uprn: payload.uprn,
             }
         })
           .then(function (response) {
