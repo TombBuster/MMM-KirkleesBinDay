@@ -18,7 +18,7 @@ You'll need your uprn (Unique Property Reference Number) for the Kirklees API. I
 Enter this in the config.js for your MagicMirror installation:
 
     {
-        module: 'MMM-WestBerksBinDay',
+        module: 'MMM-KirkleesBinDay',
         position: 'top_left',
         header: 'Bin Day',
         config: {
