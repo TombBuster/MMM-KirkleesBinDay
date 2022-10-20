@@ -41,7 +41,7 @@ Module.register('MMM-KirkleesBinDay', {
     var self = this;
     this.timer = setTimeout(function () {
       self.getPickups();
-    }, 60 * 1000); // update once an hour
+    }, 60 * 60 * 1000); // update once an hour
   },
 
   socketNotificationReceived: function (notification, payload) {
