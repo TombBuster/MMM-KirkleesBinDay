@@ -2,7 +2,8 @@ Module.register('MMM-KirkleesBinDay', {
 
   // Default values
   defaults: {
-    uprn: "",
+    postcode: "",
+    houseNumber: "",
     dateFormat: "dddd D MMMM",
   },
 
@@ -34,7 +35,9 @@ Module.register('MMM-KirkleesBinDay', {
     clearTimeout(this.timer);
     this.timer = null;
     this.sendSocketNotification("MMM-KIRKLEESBINDAY-GET", {
-      uprn: this.config.uprn
+
+      postcode: this.config.postcode,
+      houseNumber: this.config.houseNumber
     });
 
     // Set check times

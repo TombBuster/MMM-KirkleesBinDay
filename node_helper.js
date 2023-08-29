@@ -4,6 +4,7 @@ var cheerio = require("cheerio");
 var parseString = require('xml2js').parseString;
 const multisort = require("multisort");
 var moment = require("moment");
+const querystring = require('querystring');
 
 module.exports = NodeHelper.create({
   start: function () {
@@ -16,19 +17,22 @@ module.exports = NodeHelper.create({
     if (notification == "MMM-KIRKLEESBINDAY-CONFIG") {
       this.config = payload;
     } else if (notification == "MMM-KIRKLEESBINDAY-GET") {
+
       const headers = {
-        "Cookie": "ASP.NET_SessionId=nkdq0iquq5ivr25zfvvkevx0"
+        //"Cookie": "ASP.NET_SessionId=zlhhfjpvdnihcxwcvuygpkwq",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
+
       const requestData = {
-        transaction: 'bin-collection-dates',
+        //transaction: 'bin-collection-dates',
         __EVENTTARGET: '',
         __EVENTARGUMENT: '',
         __LASTFOCUS: '',
-        __VIEWSTATE: '/wEPDwUJNzM1OTY0Mzk0D2QWAmYPZBYCZg9kFgICAw9kFgICAQ9kFgICBw9kFgICAQ9kFgYCCQ9kFgICAQ8PFgIeBFRleHRkZGQCDw8PFgIeB1Zpc2libGVnZBYCAgMPZBYIAgIPZBYCAgEPZBYGAgMPDxYCHwAFF1Bvc3Rjb2RlIG9yIHN0cmVldCBuYW1lZGQCBQ8PZBYCHgtQbGFjZWhvbGRlcgUeRW50ZXIgcG9zdGNvZGUgb3Igc3RyZWV0IG5hbWUuZAIHDw8WBB8ABR5FbnRlciBwb3N0Y29kZSBvciBzdHJlZXQgbmFtZS4fAWhkZAIEDw8WAh8BaGQWAgIBD2QWAgIBD2QWAgIBD2QWAgIDDxBkZBYAZAIGDw8WAh8BaGQWAgIBD2QWAgIBD2QWAgIBD2QWAgIDDxBkZBYAZAIIDw8WAh8BaGQWAgIBD2QWBAIBDxYCHglpbm5lcmh0bWwFGFBsZWFzZSBzZWxlY3QgYW4gYWRkcmVzc2QCAw88KwALAGQCEw9kFgICAQ9kFgICCw8WAh8BaGRkSkksp2dORgO7eg5b0To4gQTXssxt2%2Bkr3mU32tg7XEc%3D',
-        __VIEWSTATEGENERATOR: '255667BB',
+        __VIEWSTATE: "/wEPDwUJNzM1OTY0Mzk0D2QWAmYPZBYCZg9kFgICAw9kFgICAQ9kFgICBw9kFgICAQ9kFgYCCQ9kFgICAQ8PFgIeBFRleHRkZGQCDw8PFgIeB1Zpc2libGVnZBYCAgMPZBYIAgIPZBYCAgEPZBYGAgMPDxYCHwAFF1Bvc3Rjb2RlIG9yIHN0cmVldCBuYW1lZGQCBQ8PZBYCHgtQbGFjZWhvbGRlcgUeRW50ZXIgcG9zdGNvZGUgb3Igc3RyZWV0IG5hbWUuZAIHDw8WBB8ABR5FbnRlciBwb3N0Y29kZSBvciBzdHJlZXQgbmFtZS4fAWhkZAIEDw8WAh8BaGQWAgIBD2QWAgIBD2QWAgIBD2QWAgIDDxBkZBYAZAIGDw8WAh8BaGQWAgIBD2QWAgIBD2QWAgIBD2QWAgIDDxBkZBYAZAIIDw8WAh8BaGQWAgIBD2QWBAIBDxYCHglpbm5lcmh0bWwFGFBsZWFzZSBzZWxlY3QgYW4gYWRkcmVzc2QCAw88KwALAGQCEw9kFgICAQ9kFgICCw8WAh8BaGRkSkksp2dORgO7eg5b0To4gQTXssxt2+kr3mU32tg7XEc=",
+        __VIEWSTATEGENERATOR: "255667BB",
         __SCROLLPOSITIONX: '0',
         __SCROLLPOSITIONY: '0',
-        __EVENTVALIDATION: '/wEdAAXNghFmzP7PjE%2Bkuj8UVfwZBFs81DS%2FU2qI6WMTgivGTA1xW1g%2FEwI5S%2BJ%2Br9vxHkdPwOk%2B385HtDJeMd9G%2BVGuiNfBseChletdZQdpKPUgVe4455bDQLSIhTawagDCl5CLkhytsSYsy%2BaPDw%2FpgRAz',
+        __EVENTVALIDATION: "/wEdAAXNghFmzP7PjE+kuj8UVfwZBFs81DS/U2qI6WMTgivGTA1xW1g/EwI5S+J+r9vxHkdPwOk+385HtDJeMd9G+VGuiNfBseChletdZQdpKPUgVe4455bDQLSIhTawagDCl5CLkhytsSYsy+aPDw/pgRAz",
         'ctl00$ctl00$cphPageBody$cphContent$hdnBinUPRN': '',
         'ctl00$ctl00$cphPageBody$cphContent$thisGeoSearch$txtGeoPremises': payload.houseNumber,
         'ctl00$ctl00$cphPageBody$cphContent$thisGeoSearch$txtGeoSearch': payload.postcode,
@@ -38,12 +42,13 @@ module.exports = NodeHelper.create({
 
       axios.post(
         'https://www.kirklees.gov.uk/beta/your-property-bins-recycling/your-bins/?transaction=bin-collection-dates',
-        requestData,
-        { headers }
+        querystring.stringify(requestData),
+        {
+          headers
+        }
       )
         .then(response => {
           const $ = cheerio.load(response.data);
-
           const greyScrape = $("#cphPageBody_cphContent_wtcDomestic240__hgcBinNextCollectionLabel")
           const greenScrape = $("#cphPageBody_cphContent_wtcRecycle240__hgcBinNextCollectionLabel")
           const brownScrape = $("#cphPageBody_cphContent_wtcGardenWaste240__hgcBinNextCollectionLabel")
@@ -67,6 +72,7 @@ module.exports = NodeHelper.create({
         .catch(error => {
           console.error('Error:', error);
         });
+
     }
   },
 
