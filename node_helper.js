@@ -53,8 +53,8 @@ module.exports = NodeHelper.create({
             },
           });
         bins = response.data.integration.transformed.rows_data
-        const greyScrape = bins[1604926].NextCollectionDate
-        const greenScrape = bins[1408003].NextCollectionDate
+        const greyScrape = bins[1801580].NextCollectionDate
+        const greenScrape = bins[1816913].NextCollectionDate
         const brownScrape = bins[1702116].NextCollectionDate
 
         const schedule = [];
