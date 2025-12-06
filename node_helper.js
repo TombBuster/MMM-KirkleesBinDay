@@ -53,10 +53,12 @@ module.exports = NodeHelper.create({
             },
           });
         bins = response.data.integration.transformed.rows_data
+        console.log(bins)
         const greyScrape = bins[1801580].NextCollectionDate
         const greenScrape = bins[1816913].NextCollectionDate
-        const brownScrape = bins[1702116].NextCollectionDate
-
+        if (typeof bins[1702116] != "undefined") {
+          const brownScrape = bins[1702116].NextCollectionDate
+        }
         const schedule = [];
 
 
@@ -66,8 +68,10 @@ module.exports = NodeHelper.create({
         greenMoment = moment(greenScrape);
         schedule.push({ pickupDate: greenMoment, pickupType: "GreenBin" });
 
-        brownMoment = moment(brownScrape);
-        schedule.push({ pickupDate: brownMoment, pickupType: "BrownBin" });
+        if (typeof bins[1702116] != "undefined") {
+          brownMoment = moment(brownScrape);
+          schedule.push({ pickupDate: brownMoment, pickupType: "BrownBin" });
+        }
 
         this.getNextPickups(payload, schedule)
       }
