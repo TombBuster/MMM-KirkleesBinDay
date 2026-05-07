@@ -54,8 +54,8 @@ module.exports = NodeHelper.create({
           });
         bins = response.data.integration.transformed.rows_data
         console.log(bins)
-        const greyScrape = bins[1801580].NextCollectionDate
-        const greenScrape = bins[1816913].NextCollectionDate
+        const greyScrape = bins[1819527].NextCollectionDate
+        const greenScrape = bins[1769467].NextCollectionDate
         if (typeof bins[1702116] != "undefined") {
           const brownScrape = bins[1702116].NextCollectionDate
         }
